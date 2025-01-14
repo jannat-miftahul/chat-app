@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     socket.on("connect", function () {
         console.log("Connected to the server");
         const username = prompt("Enter your username:");
-        socket.emit("add user", username);
+        socket.emit("set_username", username);
     });
 
     socket.on("message", function (msg) {
@@ -12,6 +12,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const messageDiv = document.createElement("div");
         messageDiv.textContent = msg;
         document.getElementById("messages").appendChild(messageDiv);
+    });
+
+    socket.on("update_user_list", function (userList) {
+        const userListDiv = document.getElementById("user-list");
+        userListDiv.innerHTML = "";
+        userList.forEach(function (user) {
+            const userDiv = document.createElement("div");
+            userDiv.textContent = user;
+            userListDiv.appendChild(userDiv);
+        });
     });
 
     window.sendMessage = function () {

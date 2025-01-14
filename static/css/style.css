@@ -25,6 +25,22 @@ h1 {
     color: #333;
 }
 
+.user-list {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.user-list div {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #e1f5fe;
+    color: #0277bd;
+}
+
 .messages {
     flex: 1;
     overflow-y: auto;

@@ -24,18 +24,16 @@ def handle_connect():
 @socketio.on('disconnect')
 def handle_disconnect():
     if request.sid in users:
-        del users[request.sid]
-    print("A user disconnected!")
+        username = users.pop(request.sid)
+        print(f"User {username} disconnected!")
+        send(f"{username} has left the chat", broadcast=True)
+        emit('update_user_list', list(users.values()), broadcast=True)
 
 @socketio.on('set_username')
 def handle_set_username(username):
     users[request.sid] = username
     send(f"{username} has joined the chat", broadcast=True)
-
-@socketio.on('add user')
-def handle_add_user(username):
-    users[request.sid] = username
-    print(f"User added: {username}")
+    emit('update_user_list', list(users.values()), broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
