@@ -1,0 +1,16 @@
+# Virtual environment
+venv/
+
+# Python specific
+*.pyc
+__pycache__/
+
+# Environment variables
+.env
+
+# IDE specific
+.vscode/
+.idea/
+
+# Flask specific
+instance/
