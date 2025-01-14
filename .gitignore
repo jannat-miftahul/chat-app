@@ -1,5 +1,6 @@
 # Virtual environment
 venv/
+flask_chat_venv/
 
 # Python specific
 *.pyc
