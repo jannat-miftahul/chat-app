@@ -23,33 +23,35 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         if (username === currentUsername) {
             messageDiv.classList.add("flex", "justify-end", "mb-2");
-            messageDiv.classList.add(
+            messageContentSpan.classList.add(
                 "bg-blue-100",
                 "p-2",
                 "rounded",
                 "text-right",
-                "inline-block",
-                // "max-w-xs"
+                // "inline-block",
+                "max-w-xl"
             );
             usernameSpan.classList.add(
                 "font-bold",
                 "text-right",
                 "text-blue-500"
+                // "inline-block"
             );
         } else {
             messageDiv.classList.add("flex", "justify-start", "mb-2");
-            messageDiv.classList.add(
+            messageContentSpan.classList.add(
                 "bg-gray-100",
                 "p-2",
                 "rounded",
                 "text-left",
-                "inline-block",
-                // "max-w-xs"
+                // "inline-block",
+                "max-w-xl"
             );
             usernameSpan.classList.add(
                 "font-bold",
                 "text-left",
                 "text-green-500"
+                // "inline-block"
             );
         }
 
@@ -71,7 +73,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     window.sendMessage = function () {
         const messageInput = document.getElementById("message-input");
         const message = messageInput.value;
-        socket.send(message); // Send only the message content
+        // socket.send(`${currentUsername}: ${message}`);
+        socket.send(message);
         messageInput.value = "";
     };
 });
