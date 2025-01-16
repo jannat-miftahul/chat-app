@@ -1,36 +1,77 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
-from collections import deque
+from collections import deque, OrderedDict
+import time
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 users = {}
-message_queue = deque()
+message_queue = deque()  # For FCFS and FIFO
+lru_message_queue = OrderedDict()  # For LRU
+priority_queue = []  # For Priority Scheduling
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# use socketio to send and receive messages
 @socketio.on('message')
-
-# handle the message
 def handle_message(msg):
     username = users.get(request.sid, "Anonymous")
+    timestamp = time.time()
+    priority = 1  # Default priority, you can change this based on your criteria
+    
+    # Add message to FCFS/FIFO queue
     message_queue.append((username, msg))
-    process_message_queue()
+    
+    # Add message to LRU queue
+    lru_message_queue[(username, msg)] = timestamp
+    
+    # Add message to Priority queue
+    priority_queue.append((priority, username, msg))
+    priority_queue.sort(reverse=True)  # Sort by priority (highest first)
+    
+    # Process messages based on the desired algorithm
+    process_fcfs_queue()
+    # process_fifo_queue()
+    # process_lru_queue()
+    # process_round_robin_queue()
+    # process_priority_queue()
 
-# broadcast the message to all users
-# used algorithm - breadth first search
-def process_message_queue():
+def process_fcfs_queue():
     while message_queue:
         username, msg = message_queue.popleft()
         print(f"Message from {username}: {msg}")
         send(f"{username}: {msg}", broadcast=True)
 
-# handle connect and disconnect events
+def process_fifo_queue():
+    while message_queue:
+        username, msg = message_queue.popleft()
+        print(f"Message from {username}: {msg}")
+        send(f"{username}: {msg}", broadcast=True)
+
+def process_lru_queue():
+    while lru_message_queue:
+        lru_message = min(lru_message_queue, key=lru_message_queue.get)
+        username, msg = lru_message
+        del lru_message_queue[lru_message]
+        print(f"Message from {username}: {msg}")
+        send(f"{username}: {msg}", broadcast=True)
+
+def process_round_robin_queue(time_slice=1):
+    while message_queue:
+        username, msg = message_queue.popleft()
+        print(f"Message from {username}: {msg}")
+        send(f"{username}: {msg}", broadcast=True)
+        time.sleep(time_slice)  # Simulate time slice
+
+def process_priority_queue():
+    while priority_queue:
+        priority, username, msg = priority_queue.pop(0)
+        print(f"Message from {username} with priority {priority}: {msg}")
+        send(f"{username}: {msg}", broadcast=True)
+
 @socketio.on('connect')
 def handle_connect():
     print("A user connected!")
@@ -43,7 +84,6 @@ def handle_disconnect():
         send(f"{username} has left the chat", broadcast=True)
         emit('update_user_list', list(users.values()), broadcast=True)
 
-# handle setting the username
 @socketio.on('set_username')
 def handle_set_username(username):
     users[request.sid] = username
