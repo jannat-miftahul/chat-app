@@ -3,7 +3,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     socket.on("connect", function () {
         console.log("Connected to the server");
-        const username = prompt("Enter your username:");
+        let username = "";
+        while (!username) {
+            username = prompt("Enter your username:");
+        }
         socket.emit("set_username", username);
     });
 

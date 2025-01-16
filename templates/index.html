@@ -7,18 +7,23 @@
     <!-- favicon -->
     <link rel="icon" href="https://i.ibb.co.com/4NMNZsv/vector-chat-icon-png-302635.jpg" type="image/x-icon">
     <title>QuikTalk</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../static/css/style.css">
     <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
 </head>
 
-<body>
-    <div class="chat-container">
-        <h1>Real-Time Chat</h1>
-        <div id="user-list" class="user-list"></div>
-        <div id="messages" class="messages"></div>
-        <div class="input-container">
-            <input type="text" id="message-input" placeholder="Type a message">
-            <button onclick="sendMessage()">Send</button>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-20">
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h1 class="text-2xl font-bold mb-4">Welcome to QuikTalk</h1>
+            <h4 class="text-lg mb-4">Join the conversation in real-time</h4>
+            <div id="user-list" class="user-list mb-4 p-2 border rounded bg-gray-50"></div>
+            <div id="messages" class="messages mb-4 p-2 border rounded bg-gray-50 h-64 overflow-y-scroll"></div>
+            <div class="input-container flex">
+                <input type="text" id="message-input" placeholder="Type a message" class="flex-grow p-2 border rounded-l">
+                <button onclick="sendMessage()" class="bg-blue-500 text-white py-2 px-6 rounded-r">Send</button>
+            </div>
         </div>
     </div>
 
