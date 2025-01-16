@@ -1,19 +1,60 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     const socket = io.connect("http://127.0.0.1:5000");
+    let currentUsername = "";
 
     socket.on("connect", function () {
         console.log("Connected to the server");
-        let username = "";
-        while (!username) {
-            username = prompt("Enter your username:");
+        while (!currentUsername) {
+            currentUsername = prompt("Enter your username:");
         }
-        socket.emit("set_username", username);
+        socket.emit("set_username", currentUsername);
     });
 
     socket.on("message", function (msg) {
         console.log("Message received: " + msg);
         const messageDiv = document.createElement("div");
-        messageDiv.textContent = msg;
+        const usernameSpan = document.createElement("span");
+        const messageContentSpan = document.createElement("span");
+
+        const [username, message] = msg.split(": ", 2); // Split the message to get username and message content
+
+        usernameSpan.textContent = username + ": ";
+        messageContentSpan.textContent = message;
+
+        if (username === currentUsername) {
+            messageDiv.classList.add("flex", "justify-end", "mb-2");
+            messageDiv.classList.add(
+                "bg-blue-100",
+                "p-2",
+                "rounded",
+                "text-right",
+                "inline-block",
+                // "max-w-xs"
+            );
+            usernameSpan.classList.add(
+                "font-bold",
+                "text-right",
+                "text-blue-500"
+            );
+        } else {
+            messageDiv.classList.add("flex", "justify-start", "mb-2");
+            messageDiv.classList.add(
+                "bg-gray-100",
+                "p-2",
+                "rounded",
+                "text-left",
+                "inline-block",
+                // "max-w-xs"
+            );
+            usernameSpan.classList.add(
+                "font-bold",
+                "text-left",
+                "text-green-500"
+            );
+        }
+
+        messageDiv.appendChild(usernameSpan);
+        messageDiv.appendChild(messageContentSpan);
         document.getElementById("messages").appendChild(messageDiv);
     });
 
@@ -30,7 +71,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     window.sendMessage = function () {
         const messageInput = document.getElementById("message-input");
         const message = messageInput.value;
-        socket.send(message);
+        socket.send(message); // Send only the message content
         messageInput.value = "";
     };
 });

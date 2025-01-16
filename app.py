@@ -33,10 +33,10 @@ def handle_message(msg):
     priority_queue.sort(reverse=True)  # Sort by priority (highest first)
     
     # Process messages based on the desired algorithm
-    process_fcfs_queue()
+    # process_fcfs_queue()
     # process_fifo_queue()
     # process_lru_queue()
-    # process_round_robin_queue()
+    process_round_robin_queue()
     # process_priority_queue()
 
 def process_fcfs_queue():
