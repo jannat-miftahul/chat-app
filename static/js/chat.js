@@ -8,56 +8,67 @@ document.addEventListener("DOMContentLoaded", (event) => {
             currentUsername = prompt("Enter your username:");
         }
         socket.emit("set_username", currentUsername);
+        document.getElementById(
+            "user-profile"
+        ).textContent = `You are logged in as: ${currentUsername}`;
     });
 
     socket.on("message", function (msg) {
         console.log("Message received: " + msg);
+        const messageContainer = document.createElement("div");
         const messageDiv = document.createElement("div");
-        const usernameSpan = document.createElement("span");
-        const messageContentSpan = document.createElement("span");
+        const usernameDiv = document.createElement("div");
 
         const [username, message] = msg.split(": ", 2); // Split the message to get username and message content
 
-        usernameSpan.textContent = username + ": ";
-        messageContentSpan.textContent = message;
+        usernameDiv.textContent = username;
+        messageDiv.textContent = message;
 
         if (username === currentUsername) {
-            messageDiv.classList.add("flex", "justify-end", "mb-2");
-            messageContentSpan.classList.add(
+            messageContainer.classList.add(
+                "flex",
+                "flex-col",
+                "items-end",
+                "mb-2"
+            );
+            messageDiv.classList.add(
                 "bg-blue-100",
                 "p-2",
                 "rounded",
                 "text-right",
-                // "inline-block",
+                "inline-block",
                 "max-w-xl"
             );
-            usernameSpan.classList.add(
+            usernameDiv.classList.add(
                 "font-bold",
                 "text-right",
                 "text-blue-500"
-                // "inline-block"
             );
         } else {
-            messageDiv.classList.add("flex", "justify-start", "mb-2");
-            messageContentSpan.classList.add(
+            messageContainer.classList.add(
+                "flex",
+                "flex-col",
+                "items-start",
+                "mb-2"
+            );
+            messageDiv.classList.add(
                 "bg-gray-100",
                 "p-2",
                 "rounded",
                 "text-left",
-                // "inline-block",
+                "inline-block",
                 "max-w-xl"
             );
-            usernameSpan.classList.add(
+            usernameDiv.classList.add(
                 "font-bold",
                 "text-left",
                 "text-green-500"
-                // "inline-block"
             );
         }
 
-        messageDiv.appendChild(usernameSpan);
-        messageDiv.appendChild(messageContentSpan);
-        document.getElementById("messages").appendChild(messageDiv);
+        messageContainer.appendChild(usernameDiv);
+        messageContainer.appendChild(messageDiv);
+        document.getElementById("messages").appendChild(messageContainer);
     });
 
     socket.on("update_user_list", function (userList) {
