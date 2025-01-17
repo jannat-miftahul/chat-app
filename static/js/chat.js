@@ -23,6 +23,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         usernameDiv.textContent = username;
         messageDiv.textContent = message;
+        messageDiv.classList.add("break-word");
+
+        console.log("Current username: " + currentUsername);
+        console.log("Message username: " + username);
 
         if (username === currentUsername) {
             messageContainer.classList.add("flex", "justify-end", "mb-2");
