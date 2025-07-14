@@ -2,6 +2,23 @@
 
 A modern real-time chat application built with Flask-SocketIO featuring multiple message scheduling algorithms and a responsive UI.
 
+## 📑 Table of Contents
+
+-   [Features](#-features)
+-   [Project Structure](#-project-structure)
+-   [Getting Started](#-getting-started)
+-   [Technologies Used](#️-technologies-used)
+-   [Message Scheduling Algorithms](#-message-scheduling-algorithms)
+-   [Usage Guide](#-usage-guide)
+-   [Configuration](#️-configuration)
+-   [Requirements](#-requirements)
+-   [Key Features in Detail](#-key-features-in-detail)
+-   [Contributing](#-contributing)
+-   [Troubleshooting](#-troubleshooting)
+-   [Screenshots](#-screenshots)
+-   [Future Enhancements](#-future-enhancements)
+-   [License](#-license)
+
 ## ✨ Features
 
 -   **Real-time Communication**: Instant messaging using WebSockets
@@ -190,12 +207,17 @@ gunicorn==23.0.0
 
 ## 📸 Screenshots
 
-### 💬 Chat Interface
+### Login Screen
 
--   Modern and clean UI design
--   Real-time message updates
--   User profile display at the top
--   Responsive layout for all devices
+![Login Screen](static/images/screenshots/login-screen.png)
+
+### Dynamic User List
+
+![Dynamic User List](static/images/screenshots/user-list.png)
+
+### Live Chat Conversation
+
+![Live Chat Conversation](static/images/screenshots/conversation.png)
 
 ## 🎯 Future Enhancements
 
@@ -207,7 +229,7 @@ gunicorn==23.0.0
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the MIT License.
 
 ---
 

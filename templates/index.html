@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- favicon -->
-    <link rel="icon" href="../static/images/chat-logo.png" type="image/x-icon">
+    <link rel="icon" href="../static/images/chat-logo.png" type="image/x-icon" />
     <title>QuikTalk</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css" />
     <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
 </head>
 
@@ -19,18 +19,23 @@
             <div id="user-profile" class="text-purple-700 mb-4 p-2 border rounded bg-gray-50 text-center">
                 <!-- User profile or username will be displayed here -->
             </div>
-            <h1 class="text-2xl font-bold mb-4 flex items-center justify-center">Welcome to
-                <img src="../static/images/chat-animation.gif" alt="QuikTalk"
-                    class="inline-block h-8 w-8"> <span class="text-blue-500"></span>Quik <span
-                    class="text-yellow-500">Talk</span>
+            <h1 class="text-2xl font-bold mb-4 flex items-center justify-center">
+                Welcome to
+                <img src="../static/images/chat-animation.gif" alt="QuikTalk" class="inline-block h-8 w-8" />
+                <span class="text-blue-500"></span>Quik
+                <span class="text-yellow-500">Talk</span>
             </h1>
-            <h4 class="text-lg text-gray-400 mb-4 text-center">Join the conversation in real-time</h4>
+            <h4 class="text-lg text-gray-400 mb-4 text-center">
+                Join the conversation in real-time
+            </h4>
             <div id="user-list" class="user-list mb-4 p-2 border rounded bg-gray-50"></div>
             <div id="messages" class="messages mb-4 p-2 border rounded bg-gray-50 h-64 overflow-y-scroll"></div>
             <div class="input-container flex">
                 <input type="text" id="message-input" placeholder="Type a message"
-                    class="flex-grow p-2 border rounded-l">
-                <button onclick="sendMessage()" class="bg-blue-500 text-white py-2 px-6 rounded-r">Send</button>
+                    class="flex-grow p-2 border rounded-l" />
+                <button onclick="sendMessage()" class="bg-blue-500 text-white py-2 px-6 rounded-r">
+                    Send
+                </button>
             </div>
         </div>
     </div>
