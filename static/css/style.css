@@ -215,8 +215,8 @@ button:hover {
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
     .message-received {
-        background: #374151;
-        color: #f9fafb;
+        background: beige;
+        color: #333;
         border-color: #4b5563;
     }
 

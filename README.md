@@ -41,19 +41,14 @@ A modern real-time chat application built with Flask-SocketIO featuring multiple
 
 ```
 chat-app/
-├── app.py                 # Main Flask application with SocketIO
-├── requirements.txt       # Python dependencies
-├── tailwind.config.js     # Tailwind CSS configuration
+├── app.py              # Main application
+├── requirements.txt    # Dependencies
 ├── templates/
-│   └── index.html        # Main chat interface
-├── ystatic/
-│   ├── css/
-│   │   └── style.css        # Custom styles
-│   ├── js/
-│   │   └── chat.js          # Client-side JavaScript
-│   └── images/
-│       ├── chat-animation.gif
-│       └── chat-logo.png
+│   └── index.html     # Chat interface
+├── static/
+│   ├── css/style.css  # Styles
+│   ├── js/chat.js     # JavaScript
+│   └── images/        # Assets
 └── README.md
 ```
 
