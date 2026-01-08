@@ -1,6 +1,18 @@
 # 💬 QuikTalk - Real-Time Chat Application
 
-A modern real-time chat application built with Flask-SocketIO featuring multiple message scheduling algorithms and a responsive UI.
+<div align="center">
+
+![QuikTalk Logo](static/images/logo.png)
+
+A modern real-time chat application built with Flask-SocketIO featuring message encryption, multiple chat rooms, private messaging, and a beautiful pastel UI design.
+
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-2.3-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com)
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-4.6-010101?style=for-the-badge&logo=socket.io&logoColor=white)](https://socket.io)
+
+</div>
+
+---
 
 ## 📑 Table of Contents
 
@@ -8,197 +20,236 @@ A modern real-time chat application built with Flask-SocketIO featuring multiple
 -   [Project Structure](#-project-structure)
 -   [Getting Started](#-getting-started)
 -   [Technologies Used](#️-technologies-used)
--   [Message Scheduling Algorithms](#-message-scheduling-algorithms)
 -   [Usage Guide](#-usage-guide)
 -   [Configuration](#️-configuration)
 -   [Requirements](#-requirements)
--   [Key Features in Detail](#-key-features-in-detail)
+-   [Socket Events](#-socket-events)
+-   [Screenshots](#-screenshots)
+-   [Message Scheduling Algorithms](#-message-scheduling-algorithms)
 -   [Contributing](#-contributing)
 -   [Troubleshooting](#-troubleshooting)
--   [Screenshots](#-screenshots)
 -   [Future Enhancements](#-future-enhancements)
--   [License](#-license)
+
+---
 
 ## ✨ Features
 
--   **Real-time Communication**: Instant messaging using WebSockets
--   **Multiple Scheduling Algorithms**:
-    -   First Come First Serve (FCFS)
-    -   First In First Out (FIFO)
-    -   Least Recently Used (LRU)
-    -   Round Robin
-    -   Priority Scheduling
--   **User Management**: Automatic user numbering (user1, user2, etc.)
--   **Responsive Design**: Modern UI with Tailwind CSS
--   **Message Alignment**: Sender messages on right, receiver messages on left
--   **User List**: Live display of connected users
--   **Visual Feedback**: Different styling for sent vs received messages
--   **User Profile Display**: Shows current logged-in user
--   **System Notifications**: Join/leave chat notifications
--   **Username Validation**: Ensures users enter a valid username
+### 🎨 Beautiful UI
+
+-   **Pastel Color Palette** - Bubblegum Pink, Lilac, and Aqua theme
+-   **Glassmorphism Effects** - Modern frosted glass design
+-   **Emoji Avatars** - Fun animal emojis for each user
+-   **Smooth Animations** - Bouncing logos, floating decorations, slide-in messages
+-   **Responsive Design** - Works on desktop and mobile
+
+### 💬 Chat Features
+
+-   **Real-time Messaging** - Instant message delivery using WebSockets
+-   **Multiple Chat Rooms** - Create, join, and manage different rooms
+-   **Private Messaging** - Send direct encrypted messages to users
+-   **Message History** - Room-specific message history
+-   **Emoji Picker** - Quick access to emojis
+
+### 🔐 Security
+
+-   **End-to-End Encryption** - Fernet symmetric encryption for messages
+-   **Room-Specific Keys** - Each room can have its own encryption key
+-   **Secure Configuration** - Environment-based secret management
+
+### 📊 Advanced Features
+
+-   **Comprehensive Logging** - Categorized logs with file rotation
+-   **Message Scheduling Algorithms** - FCFS, FIFO, LRU, Round Robin, Priority
+-   **User Status Tracking** - Online status indicators
+-   **System Notifications** - Join/leave notifications
+
+---
 
 ## 📁 Project Structure
 
 ```
 chat-app/
-├── app.py              # Main application
-├── requirements.txt    # Dependencies
-├── templates/
-│   └── index.html     # Chat interface
-├── static/
-│   ├── css/style.css  # Styles
-│   ├── js/chat.js     # JavaScript
-│   └── images/        # Assets
-└── README.md
+├── app.py              # Main Flask application
+├── config.py           # Configuration settings
+├── requirements.txt    # Python dependencies
+├── services/           # Encryption, logging, room management
+├── handlers/           # Message, room, user, DM handlers
+├── templates/          # HTML templates
+├── static/             # CSS, JS, images
+└── logs/               # Log files (gitignored)
 ```
+
+---
 
 ## 🚀 Getting Started
 
-1. **📥 Clone the repository**:
+### Prerequisites
+
+-   Python 3.8 or higher
+-   pip (Python package manager)
+
+### Installation
+
+1. **📥 Clone the repository**
 
     ```bash
     git clone https://github.com/miftah1299/chat-app.git
     cd chat-app
     ```
 
-2. **🐍 Create a virtual environment and install dependencies**:
+2. **🐍 Create virtual environment**
 
     ```bash
     python -m venv venv
 
-    # On Windows
+    # On Windows (Git Bash)
+    source venv/Scripts/activate
+
+    # On Windows (CMD)
     venv\Scripts\activate
 
     # On macOS/Linux
     source venv/bin/activate
+    ```
 
+3. **📦 Install dependencies**
+
+    ```bash
     pip install -r requirements.txt
     ```
 
-3. **▶️ Run the Flask application**:
+4. **▶️ Run the application**
 
     ```bash
     python app.py
     ```
 
-4. **🌐 Open your browser and navigate to**:
-
+5. **🌐 Open your browser**
     ```
     http://127.0.0.1:5000
     ```
 
-5. **💬 Start chatting**:
-    - 👤 Enter your username when prompted
-    - ⌨️ Type messages and see them appear in real-time
-    - 🔄 Open multiple browser tabs to simulate multiple users
+---
 
 ## 🛠️ Technologies Used
 
-### Backend:
+### Backend
 
--   **Flask** - Web framework
--   **Flask-SocketIO** - Real-time communication
--   **Python collections** (deque, OrderedDict) - Message queuing
--   **Eventlet** - Asynchronous networking library
--   **Gunicorn** - WSGI HTTP Server
+| Technology         | Purpose                           |
+| ------------------ | --------------------------------- |
+| **Flask**          | Web framework                     |
+| **Flask-SocketIO** | Real-time WebSocket communication |
+| **Cryptography**   | Message encryption (Fernet)       |
+| **Eventlet**       | Async networking                  |
+| **Python Logging** | Comprehensive logging system      |
 
-### Frontend:
+### Frontend
 
--   **HTML5** - Structure
--   **Tailwind CSS** - Modern utility-first CSS framework
--   **JavaScript** - Client-side functionality
--   **Socket.IO** - WebSocket client library
+| Technology           | Purpose                                |
+| -------------------- | -------------------------------------- |
+| **HTML5**            | Structure                              |
+| **CSS3**             | Custom cute styling with CSS variables |
+| **JavaScript**       | Client-side functionality              |
+| **Socket.IO Client** | WebSocket connection                   |
+| **Google Fonts**     | Nunito font family                     |
+| **Font Awesome**     | Icons                                  |
 
-## 🧠 Message Scheduling Algorithms
-
-The application demonstrates various message processing algorithms:
-
-1. **FCFS (First Come First Serve)**:
-
-    - Messages processed in the order they arrive
-    - Simple queue-based implementation using `deque`
-
-2. **FIFO (First In First Out)**:
-
-    - Similar to FCFS, processes messages sequentially
-    - Ensures fairness in message handling
-
-3. **LRU (Least Recently Used)**:
-
-    - Prioritizes least recently accessed messages
-    - Uses `OrderedDict` for timestamp tracking
-
-4. **Round Robin**:
-
-    - Time-slice based message processing
-    - Gives each message equal processing time
-
-5. **Priority Scheduling**:
-    - Messages processed based on priority levels
-    - Higher priority messages handled first
+---
 
 ## 📖 Usage Guide
 
-1. **Connection**: When you connect, you'll be assigned a unique user ID (user1, user2, etc.)
-2. **Profile**: Your username is displayed at the top of the chat interface
-3. **Messaging**: Type messages in the input field and press "Send" or hit Enter
-4. **Your Messages**: Appear on the right side with blue styling
-5. **Others' Messages**: Appear on the left side with gray styling
-6. **User List**: Shows all currently connected users in real-time
-7. **Notifications**: System messages notify when users join or leave
+### 💬 Joining the Chat
+
+1. Enter your nickname in the welcome modal
+2. Click "Join Chat 🎉"
+3. You'll be automatically added to the General room
+
+### 🏠 Chat Rooms
+
+-   **View Rooms**: See available rooms in the sidebar
+-   **Join Room**: Click on any room to join
+-   **Create Room**: Click the ➕ button to create a new room
+-   **Private Rooms**: Check "Make this room private" when creating
+
+### 💌 Private Messages
+
+-   Click on any user in "Online Friends" to open a DM
+-   Messages are automatically encrypted
+-   Close the DM panel with the back arrow
+
+### 🔐 Encryption
+
+-   Toggle encryption with the 🔒 button in the header
+-   When enabled, messages are encrypted before sending
+-   Encrypted messages show a 🔐 badge
+
+### 😊 Emojis
+
+-   Click the 😊 button to open the emoji picker
+-   Select any emoji to add it to your message
+
+---
 
 ## ⚙️ Configuration
 
--   **Port**: Default port is 5000 (configurable in app.py)
--   **Host**: Default host is 127.0.0.1 (configurable in app.py)
--   **CORS**: Enabled for all origins (configurable in app.py)
--   **Algorithm**: Change message processing algorithm in app.py
+Configuration is managed through `config.py`:
+
+```python
+# Server settings
+HOST = '127.0.0.1'
+PORT = 5000
+
+# Encryption
+ENCRYPTION_KEY = 'your-secret-key'
+
+# Logging
+LOG_LEVEL = 'INFO'  # DEBUG, INFO, WARNING, ERROR
+LOG_DIR = 'logs'
+
+# Chat settings
+MAX_MESSAGE_LENGTH = 1000
+DEFAULT_ROOM = 'General'
+MESSAGE_HISTORY_LIMIT = 100
+```
+
+### Environment Variables
+
+Create a `.env` file for sensitive configuration:
+
+```env
+SECRET_KEY=your-super-secret-key
+FLASK_ENV=development
+```
+
+---
 
 ## 📋 Requirements
 
 ```
-Flask==2.0.1
-Flask-SocketIO==5.1.1
-eventlet==0.38.2
-gunicorn==23.0.0
+Flask==2.3.3
+Flask-SocketIO==5.3.6
+Werkzeug==2.3.7
+eventlet==0.33.3
+gunicorn==21.2.0
+cryptography==41.0.0
+python-dotenv==1.0.0
 ```
 
-## 🎯 Key Features in Detail
+---
 
-### 💬 Real-time Messaging
+## 🔌 Socket Events
 
--   Instant message delivery using WebSocket technology
--   No page refresh required
--   Supports multiple concurrent users
+| Event              | Type          | Description          |
+| ------------------ | ------------- | -------------------- |
+| `set_username`     | Client→Server | Set user's nickname  |
+| `message`          | Client→Server | Send a chat message  |
+| `create_room`      | Client→Server | Create a new room    |
+| `join_room`        | Client→Server | Join a room          |
+| `private_message`  | Both          | Send/receive DM      |
+| `receive_message`  | Server→Client | New message received |
+| `update_user_list` | Server→Client | Online users list    |
 
-### 🎨 Modern UI Design
-
--   Clean and intuitive interface
--   Responsive design works on all devices
--   Visual distinctions between sent and received messages
--   Smooth animations and transitions
-
-### 👥 User Management
-
--   Automatic user identification and numbering
--   Real-time user list updates
--   Join/leave notifications
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 🐛 Troubleshooting
-
-### Common Issues:
-
--   **Port already in use**: Change the port in `app.py`
--   **Dependencies not installed**: Run `pip install -r requirements.txt`
--   **Virtual environment issues**: Recreate the virtual environment
+---
 
 ## 📸 Screenshots
 
@@ -206,28 +257,68 @@ gunicorn==23.0.0
 
 ![Login Screen](static/images/screenshots/login-screen.png)
 
-### Dynamic User List
+### Chat Interface
 
-![Dynamic User List](static/images/screenshots/user-list.png)
+![Chat Interface](static/images/screenshots/chat-interface.png)
 
-### Live Chat Conversation
+### Private Messaging
 
-![Live Chat Conversation](static/images/screenshots/conversation.png)
+![Private Messaging](static/images/screenshots/private-messaging.png)
+
+---
+
+## 🧠 Message Scheduling Algorithms
+
+The application demonstrates various message processing algorithms:
+
+| Algorithm       | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| **FCFS**        | First Come First Serve - processes messages in arrival order |
+| **FIFO**        | First In First Out - sequential processing                   |
+| **LRU**         | Least Recently Used - prioritizes older messages             |
+| **Round Robin** | Time-slice based processing                                  |
+| **Priority**    | Processes based on message priority levels                   |
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 🐛 Troubleshooting
+
+| Issue               | Solution                              |
+| ------------------- | ------------------------------------- |
+| Port already in use | Change port in `config.py`            |
+| Dependencies error  | Run `pip install -r requirements.txt` |
+| Virtual env issues  | Delete `venv/` and recreate           |
+| CSS not updating    | Hard refresh with `Ctrl+Shift+R`      |
+| Encryption error    | Ensure `cryptography` is installed    |
+
+---
 
 ## 🎯 Future Enhancements
 
 -   File sharing capabilities
 -   Dark/Light theme toggle
--   User authentication and login
--   Message history storage
+-   User authentication with database
 -   Message search functionality
-
-## 📄 License
-
-This project is open source and available under the MIT License.
+-   Voice/Video chat
+-   Message reactions
+-   User profiles with avatars
 
 ---
 
-**Made with ❤️ using Flask-SocketIO and Tailwind CSS**
+<div align="center">
 
-### 🌟 Star this repository if you found it helpful!
+**Made with 💖 using Flask-SocketIO**
+
+🌟 **Star this repository if you found it helpful!** 🌟
+
+</div>
