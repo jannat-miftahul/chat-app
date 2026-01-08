@@ -4,99 +4,226 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- favicon -->
     <link rel="icon" href="../static/images/logo.png" type="image/x-icon" />
-    <title>QuikTalk</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons -->
+    <title>QuikTalk ✨ Chat App</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="../static/css/style.css" />
+
+    <!-- Socket.IO -->
     <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+
+    <link rel="stylesheet" href="../static/css/style.css" />
 </head>
 
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-    <div class="container mx-auto p-4 max-w-4xl">
-        <div class="bg-white shadow-2xl rounded-2xl overflow-hidden backdrop-blur-sm bg-white/95">
-            <div class="bg-white shadow-2xl rounded-2xl overflow-hidden backdrop-blur-sm bg-white/95">
-                <!-- Header Section -->
-                <div class="bg-gradient-to-r from-blue-600 to-violet-600 p-6 text-white">
-                    <div id="user-profile"
-                        class="mb-4 p-3 bg-white/20 backdrop-blur-sm rounded-lg text-center border border-white/30">
-                        <i class="fas fa-user-circle text-2xl mr-2"></i>
-                        <span class="font-medium">Connecting...</span>
-                    </div>
-                    <h1 class="text-3xl font-bold mb-2 flex items-center justify-center">
-                        <i class="fas fa-comments text-yellow-300 mr-3"></i>
-                        Welcome to <span class="text-yellow-300 ml-2">Quik</span>
-                        <span class="text-blue-200">Talk</span>
-                    </h1>
-                    <p class="text-blue-100 text-center text-lg">
-                        <i class="fas fa-bolt mr-2"></i>Join the conversation in real-time
-                    </p>
+<body>
+    <!-- Floating Decorations -->
+    <div class="floating-decorations">
+        <div class="floating-shape shape-1">💬</div>
+        <div class="floating-shape shape-2">✨</div>
+        <div class="floating-shape shape-3">💕</div>
+        <div class="floating-shape shape-4">🌸</div>
+        <div class="floating-shape shape-5">⭐</div>
+        <div class="floating-shape shape-6">🎀</div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🐱</span>
+                    <span class="logo-text">QuikTalk</span>
                 </div>
+            </div>
 
-                <!-- Main Content -->
-                <div class="p-6">
-                    <!-- Online Users Section -->
-                    <div class="mb-6">
-                        <div class="flex items-center mb-3">
-                            <i class="fas fa-users text-green-500 mr-2"></i>
-                            <h3 class="text-lg font-semibold text-gray-700">Online Users</h3>
-                            <span class="ml-auto bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full"
-                                id="user-count">0</span>
-                        </div>
-                        <div id="user-list"
-                            class="bg-gray-50 border border-gray-200 rounded-xl p-4 min-h-[60px] flex flex-wrap gap-2">
-                            <div class="text-gray-500 text-sm italic">No users online</div>
-                        </div>
-                    </div>
+            <!-- User Profile Card -->
+            <div class="profile-card" id="user-profile">
+                <div class="profile-avatar">
+                    <span class="avatar-emoji">😊</span>
+                    <span class="status-dot"></span>
+                </div>
+                <div class="profile-info">
+                    <span class="profile-name">Connecting...</span>
+                    <span class="profile-status">Online</span>
+                </div>
+            </div>
 
-                    <!-- Messages Section -->
-                    <div class="mb-6">
-                        <div class="flex items-center mb-3">
-                            <i class="fas fa-comment-dots text-blue-500 mr-2"></i>
-                            <h3 class="text-lg font-semibold text-gray-700">Messages</h3>
-                        </div>
-                        <div id="messages"
-                            class="bg-gray-50 border border-gray-200 rounded-xl p-4 h-80 overflow-y-auto scroll-smooth">
-                            <div class="text-center text-gray-500 text-sm py-8">
-                                <i class="fas fa-comment-slash text-3xl mb-2"></i>
-                                <p>No messages yet. Start the conversation!</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Input Section -->
-                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                        <div class="flex gap-3">
-                            <div class="flex-1 relative">
-                                <i
-                                    class="fas fa-pen absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                <input type="text" id="message-input" placeholder="Type your message here..."
-                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white"
-                                    onkeypress="if(event.key==='Enter') sendMessage()" />
-                            </div>
-                            <button onclick="sendMessage()"
-                                class="bg-gradient-to-r from-blue-500 to-violet-600 hover:from-blue-600 hover:to-violet-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 flex items-center gap-2 hover:shadow-lg transform hover:scale-105">
-                                <i class="fas fa-paper-plane"></i>
-                                Send
-                            </button>
-                        </div>
+            <!-- Rooms Section -->
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <span>🏠 Chat Rooms</span>
+                    <button class="btn-icon" id="create-room-btn" title="Create Room">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="rooms-list" id="rooms-list">
+                    <div class="room-item active" data-room="general">
+                        <span class="room-icon">🌟</span>
+                        <span class="room-name">General</span>
+                        <span class="room-badge">0</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Footer -->
-            <div class="text-center mt-6 text-gray-600">
-                <p class="text-sm">
-                    <i class="fas fa-heart text-red-500 mr-1"></i>
-                    Made with love using Flask-SocketIO & Tailwind CSS
-                </p>
+            <!-- Online Users Section -->
+            <div class="sidebar-section">
+                <div class="section-header">
+                    <span>👥 Online Friends</span>
+                    <span class="user-count" id="user-count">0</span>
+                </div>
+                <div class="users-list" id="user-list">
+                    <div class="empty-state">
+                        <span>🔍</span>
+                        <span>No friends online</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-main">
+            <!-- Chat Header -->
+            <header class="chat-header">
+                <button class="btn-icon mobile-menu" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="chat-title">
+                    <span class="chat-room-icon">🌟</span>
+                    <div class="chat-room-info">
+                        <h1 id="current-room-name">General</h1>
+                        <span class="typing-status" id="typing-status"></span>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button class="btn-icon" id="toggle-encryption" title="Toggle Encryption">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                    <button class="btn-icon" id="room-settings" title="Room Info">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Messages Container -->
+            <div class="messages-container" id="messages">
+                <div class="welcome-message">
+                    <div class="welcome-icon">🎉</div>
+                    <h2>Welcome to QuikTalk!</h2>
+                    <p>Start chatting with your friends ✨</p>
+                    <div class="welcome-features">
+                        <span>💬 Real-time messaging</span>
+                        <span>🔐 Encrypted chats</span>
+                        <span>🏠 Multiple rooms</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Input -->
+            <div class="message-input-container">
+                <div class="input-wrapper">
+                    <button class="btn-emoji" id="emoji-btn" title="Add Emoji">
+                        <i class="fas fa-smile"></i>
+                    </button>
+                    <input type="text" id="message-input" placeholder="Type something cute... ✨" autocomplete="off" />
+                    <button class="btn-send" id="send-btn" title="Send Message">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Private Message Panel -->
+        <aside class="dm-panel" id="dm-panel">
+            <div class="dm-header">
+                <button class="btn-icon" id="close-dm">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="dm-user-info">
+                    <span class="dm-avatar">😊</span>
+                    <span class="dm-username" id="dm-username">Username</span>
+                </div>
+                <button class="btn-icon" id="dm-options">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+            </div>
+            <div class="dm-messages" id="dm-messages"></div>
+            <div class="dm-input-container">
+                <input type="text" id="dm-input" placeholder="Send a private message... 💌" autocomplete="off" />
+                <button class="btn-send" id="dm-send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Create Room Modal -->
+    <div class="modal" id="create-room-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏠 Create New Room</h2>
+                <button class="btn-icon modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Room Name</label>
+                    <input type="text" id="room-name-input" placeholder="Enter room name..." />
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="room-desc-input" placeholder="What's this room about?" />
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="room-private" />
+                    <label for="room-private">🔒 Make this room private</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancel</button>
+                <button class="btn btn-primary" id="confirm-create-room">Create Room ✨</button>
             </div>
         </div>
+    </div>
 
-        <script src="../static/js/chat.js"></script>
+    <!-- Username Modal -->
+    <div class="modal active" id="username-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content username-modal">
+            <div class="modal-icon">🐱</div>
+            <h2>Welcome to QuikTalk!</h2>
+            <p>What should we call you?</p>
+            <div class="form-group">
+                <input type="text" id="username-input" placeholder="Enter your cute nickname..." autocomplete="off" />
+            </div>
+            <button class="btn btn-primary btn-large" id="join-chat-btn">
+                Join Chat 🎉
+            </button>
+        </div>
+    </div>
+
+    <!-- Emoji Picker -->
+    <div class="emoji-picker" id="emoji-picker">
+        <div class="emoji-grid">
+            <span>😊</span><span>😂</span><span>🥰</span><span>😍</span><span>🤗</span>
+            <span>😎</span><span>🥳</span><span>😇</span><span>🤩</span><span>😋</span>
+            <span>❤️</span><span>💕</span><span>💖</span><span>💗</span><span>💜</span>
+            <span>✨</span><span>🌟</span><span>⭐</span><span>🎉</span><span>🎀</span>
+            <span>🌸</span><span>🌺</span><span>🌷</span><span>🌹</span><span>🌻</span>
+            <span>👋</span><span>👍</span><span>👏</span><span>🙌</span><span>💪</span>
+            <span>🐱</span><span>🐶</span><span>🐰</span><span>🦊</span><span>🐻</span>
+            <span>☕</span><span>🍰</span><span>🍩</span><span>🍪</span><span>🧁</span>
+        </div>
+    </div>
+
+    <script src="../static/js/chat.js"></script>
 </body>
 
 </html>

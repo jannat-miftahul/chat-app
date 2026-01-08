@@ -5,13 +5,32 @@ flask_chat_venv/
 # Python specific
 *.pyc
 __pycache__/
+*.pyo
+*.pyd
+.Python
 
 # Environment variables
 .env
+.env.local
 
 # IDE specific
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # Flask specific
 instance/
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
