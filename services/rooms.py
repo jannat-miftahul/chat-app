@@ -245,4 +245,79 @@ class RoomService:
             return []
         return list(self._rooms[room_id].members)
     
+    def add_message_to_history(self, room_id: str, message: dict) -> None:
+        """
+        Add a message to room's history.
+        
+        Args:
+            room_id: ID of the room
+            message: Message dictionary with sender, content, timestamp
+        """
+        if room_id not in self._rooms:
+            return
+        
+        room = self._rooms[room_id]
+        room.message_history.append(message)
+        
+        # Trim history if exceeds limit
+        if len(room.message_history) > self._history_limit:
+            room.message_history = room.message_history[-self._history_limit:]
     
+    def get_message_history(self, room_id: str, limit: int = 50) -> List[dict]:
+        """
+        Get recent messages from a room.
+        
+        Args:
+            room_id: ID of the room
+            limit: Maximum number of messages to return
+            
+        Returns:
+            List of message dictionaries
+        """
+        if room_id not in self._rooms:
+            return []
+        
+        messages = self._rooms[room_id].message_history
+        return messages[-limit:] if limit else messages
+    
+    def is_user_in_room(self, room_id: str, username: str) -> bool:
+        """Check if a user is in a specific room."""
+        if room_id not in self._rooms:
+            return False
+        return username in self._rooms[room_id].members
+    
+    def make_admin(self, room_id: str, username: str, requested_by: str) -> bool:
+        """
+        Make a user an admin of a room.
+        
+        Args:
+            room_id: ID of the room
+            username: User to make admin
+            requested_by: User requesting the change
+            
+        Returns:
+            True if successful
+        """
+        if room_id not in self._rooms:
+            raise RoomError(f"Room '{room_id}' does not exist")
+        
+        room = self._rooms[room_id]
+        
+        if requested_by not in room.admins:
+            raise RoomError("Only admins can add other admins")
+        
+        room.admins.add(username)
+        return True
+    
+    def room_count(self) -> int:
+        """Get the total number of rooms."""
+        return len(self._rooms)
+    
+    def total_users_in_rooms(self) -> int:
+        """Get the total number of users across all rooms."""
+        return sum(len(room.members) for room in self._rooms.values())
+
+
+class RoomError(Exception):
+    """Custom exception for room-related errors."""
+    pass
