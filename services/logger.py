@@ -156,4 +156,99 @@ class LoggerService:
         self.logger.critical(message, exc_info=exc_info)
         self.error_logger.critical(f"{message}\n{traceback.format_exc()}")
     
+    # Event-specific logging methods
+    def log_message(self, sender: str, receiver: str, room: str, message_type: str = 'text'):
+        """
+        Log a chat message event.
+        
+        Args:
+            sender: Username of the sender
+            receiver: Username of the receiver (or 'broadcast' for room messages)
+            room: Room name or 'private' for DMs
+            message_type: Type of message (text, image, file, etc.)
+        """
+        log_entry = f"[{message_type.upper()}] {sender} -> {receiver} in {room}"
+        self.message_logger.info(log_entry)
+        self.debug(log_entry)
     
+    def log_connection(self, user_id: str, username: str, event: str, ip: str = 'unknown'):
+        """
+        Log a connection event.
+        
+        Args:
+            user_id: Socket ID of the user
+            username: Username
+            event: Event type (connect, disconnect, reconnect)
+            ip: IP address of the user
+        """
+        log_entry = f"[{event.upper()}] {username} (ID: {user_id}) from {ip}"
+        self.connection_logger.info(log_entry)
+        self.info(log_entry)
+    
+    def log_room_event(self, room: str, user: str, event: str):
+        """
+        Log a room-related event.
+        
+        Args:
+            room: Room name
+            user: Username
+            event: Event type (create, join, leave, delete)
+        """
+        log_entry = f"[{event.upper()}] {user} - Room: {room}"
+        self.room_logger.info(log_entry)
+        self.info(log_entry)
+    
+    def log_private_message(self, sender: str, receiver: str):
+        """
+        Log a private message event (without content for privacy).
+        
+        Args:
+            sender: Sender username
+            receiver: Receiver username
+        """
+        log_entry = f"[PRIVATE] {sender} -> {receiver}"
+        self.message_logger.info(log_entry)
+        self.debug(log_entry)
+    
+    # Utility methods
+    def log_performance(self, func):
+        """
+        Decorator to log function performance.
+        
+        Usage:
+            @logger.log_performance
+            def my_function():
+                pass
+        """
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            start_time = datetime.now()
+            result = func(*args, **kwargs)
+            end_time = datetime.now()
+            duration = (end_time - start_time).total_seconds() * 1000
+            self.debug(f"Function {func.__name__} took {duration:.2f}ms")
+            return result
+        return wrapper
+    
+    def get_log_stats(self) -> dict:
+        """
+        Get statistics about log files.
+        
+        Returns:
+            Dictionary with log file sizes and counts
+        """
+        stats = {}
+        for filename in os.listdir(self.log_dir):
+            filepath = os.path.join(self.log_dir, filename)
+            if os.path.isfile(filepath):
+                stats[filename] = {
+                    'size_bytes': os.path.getsize(filepath),
+                    'size_mb': round(os.path.getsize(filepath) / (1024 * 1024), 2)
+                }
+        return stats
+
+
+# Create a global logger instance
+def get_logger(**kwargs) -> LoggerService:
+    """Get the global logger instance."""
+    return LoggerService(**kwargs)
