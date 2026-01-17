@@ -113,3 +113,79 @@ class EncryptionService:
             key: The encryption key as a string
         """
         self._room_ciphers[room_id] = Fernet(key.encode('utf-8'))
+    
+    def encrypt_for_room(self, room_id: str, message: str) -> str:
+        """
+        Encrypt a message using room-specific encryption.
+        
+        Args:
+            room_id: The unique identifier of the room
+            message: The plaintext message to encrypt
+            
+        Returns:
+            The encrypted message as a base64 string
+        """
+        if room_id not in self._room_ciphers:
+            # Use default cipher if no room-specific key exists
+            return self.encrypt(message)
+        
+        try:
+            cipher = self._room_ciphers[room_id]
+            encrypted = cipher.encrypt(message.encode('utf-8'))
+            return encrypted.decode('utf-8')
+        except Exception as e:
+            raise EncryptionError(f"Failed to encrypt message for room {room_id}: {str(e)}")
+    
+    def decrypt_for_room(self, room_id: str, encrypted_message: str) -> str:
+        """
+        Decrypt a message using room-specific encryption.
+        
+        Args:
+            room_id: The unique identifier of the room
+            encrypted_message: The encrypted message as a base64 string
+            
+        Returns:
+            The decrypted plaintext message
+        """
+        if room_id not in self._room_ciphers:
+            # Use default cipher if no room-specific key exists
+            return self.decrypt(encrypted_message)
+        
+        try:
+            cipher = self._room_ciphers[room_id]
+            decrypted = cipher.decrypt(encrypted_message.encode('utf-8'))
+            return decrypted.decode('utf-8')
+        except InvalidToken:
+            raise EncryptionError("Invalid token - message may be corrupted or tampered with")
+        except Exception as e:
+            raise EncryptionError(f"Failed to decrypt message for room {room_id}: {str(e)}")
+    
+    def remove_room_key(self, room_id: str) -> bool:
+        """
+        Remove the encryption key for a room.
+        
+        Args:
+            room_id: The unique identifier of the room
+            
+        Returns:
+            True if the key was removed, False if it didn't exist
+        """
+        if room_id in self._room_ciphers:
+            del self._room_ciphers[room_id]
+            return True
+        return False
+    
+    def get_public_key(self) -> str:
+        """
+        Get the public representation of the encryption key.
+        Note: This is for demonstration - in production, use asymmetric encryption.
+        
+        Returns:
+            A truncated key identifier (not the full key)
+        """
+        return self._key[:8].decode('utf-8') + '...'
+
+
+class EncryptionError(Exception):
+    """Custom exception for encryption-related errors."""
+    pass
