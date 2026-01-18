@@ -16,52 +16,30 @@ A modern real-time chat application built with Flask-SocketIO featuring message 
 
 ## 📑 Table of Contents
 
--   [Features](#-features)
--   [Project Structure](#-project-structure)
--   [Getting Started](#-getting-started)
--   [Technologies Used](#️-technologies-used)
--   [Usage Guide](#-usage-guide)
--   [Configuration](#️-configuration)
--   [Requirements](#-requirements)
--   [Socket Events](#-socket-events)
--   [Screenshots](#-screenshots)
--   [Message Scheduling Algorithms](#-message-scheduling-algorithms)
--   [Contributing](#-contributing)
--   [Troubleshooting](#-troubleshooting)
--   [Future Enhancements](#-future-enhancements)
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Technologies Used](#️-technologies-used)
+- [Usage Guide](#-usage-guide)
+- [Configuration](#️-configuration)
+- [Requirements](#-requirements)
+- [Socket Events](#-socket-events)
+- [Screenshots](#-screenshots)
+- [Message Scheduling Algorithms](#-message-scheduling-algorithms)
+- [Troubleshooting](#-troubleshooting)
 
 ---
 
 ## ✨ Features
 
-### 🎨 Beautiful UI
-
--   **Pastel Color Palette** - Bubblegum Pink, Lilac, and Aqua theme
--   **Glassmorphism Effects** - Modern frosted glass design
--   **Emoji Avatars** - Fun animal emojis for each user
--   **Smooth Animations** - Bouncing logos, floating decorations, slide-in messages
--   **Responsive Design** - Works on desktop and mobile
-
-### 💬 Chat Features
-
--   **Real-time Messaging** - Instant message delivery using WebSockets
--   **Multiple Chat Rooms** - Create, join, and manage different rooms
--   **Private Messaging** - Send direct encrypted messages to users
--   **Message History** - Room-specific message history
--   **Emoji Picker** - Quick access to emojis
-
-### 🔐 Security
-
--   **End-to-End Encryption** - Fernet symmetric encryption for messages
--   **Room-Specific Keys** - Each room can have its own encryption key
--   **Secure Configuration** - Environment-based secret management
-
-### 📊 Advanced Features
-
--   **Comprehensive Logging** - Categorized logs with file rotation
--   **Message Scheduling Algorithms** - FCFS, FIFO, LRU, Round Robin, Priority
--   **User Status Tracking** - Online status indicators
--   **System Notifications** - Join/leave notifications
+- **Beautiful Pastel UI** with glassmorphism effects and smooth animations
+- **Real-time Messaging** with WebSocket-powered instant delivery
+- **Multiple Chat Rooms** - Create, join, and manage rooms
+- **Private Messaging** with end-to-end encryption
+- **Security** - Fernet encryption with room-specific keys
+- **Emoji Support** - Built-in emoji picker and fun avatar system
+- **Message Scheduling** - FCFS, FIFO, LRU, Round Robin, Priority algorithms
+- **Responsive Design** - Works on desktop and mobile
 
 ---
 
@@ -85,8 +63,8 @@ chat-app/
 
 ### Prerequisites
 
--   Python 3.8 or higher
--   pip (Python package manager)
+- Python 3.8 or higher
+- pip (Python package manager)
 
 ### Installation
 
@@ -166,27 +144,27 @@ chat-app/
 
 ### 🏠 Chat Rooms
 
--   **View Rooms**: See available rooms in the sidebar
--   **Join Room**: Click on any room to join
--   **Create Room**: Click the ➕ button to create a new room
--   **Private Rooms**: Check "Make this room private" when creating
+- **View Rooms**: See available rooms in the sidebar
+- **Join Room**: Click on any room to join
+- **Create Room**: Click the ➕ button to create a new room
+- **Private Rooms**: Check "Make this room private" when creating
 
 ### 💌 Private Messages
 
--   Click on any user in "Online Friends" to open a DM
--   Messages are automatically encrypted
--   Close the DM panel with the back arrow
+- Click on any user in "Online Friends" to open a DM
+- Messages are automatically encrypted
+- Close the DM panel with the back arrow
 
 ### 🔐 Encryption
 
--   Toggle encryption with the 🔒 button in the header
--   When enabled, messages are encrypted before sending
--   Encrypted messages show a 🔐 badge
+- Toggle encryption with the 🔒 button in the header
+- When enabled, messages are encrypted before sending
+- Encrypted messages show a 🔐 badge
 
 ### 😊 Emojis
 
--   Click the 😊 button to open the emoji picker
--   Select any emoji to add it to your message
+- Click the 😊 button to open the emoji picker
+- Select any emoji to add it to your message
 
 ---
 
@@ -281,16 +259,6 @@ The application demonstrates various message processing algorithms:
 
 ---
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
 ## 🐛 Troubleshooting
 
 | Issue               | Solution                              |
@@ -300,18 +268,6 @@ The application demonstrates various message processing algorithms:
 | Virtual env issues  | Delete `venv/` and recreate           |
 | CSS not updating    | Hard refresh with `Ctrl+Shift+R`      |
 | Encryption error    | Ensure `cryptography` is installed    |
-
----
-
-## 🎯 Future Enhancements
-
--   File sharing capabilities
--   Dark/Light theme toggle
--   User authentication with database
--   Message search functionality
--   Voice/Video chat
--   Message reactions
--   User profiles with avatars
 
 ---
 
